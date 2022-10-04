@@ -1,0 +1,15 @@
+add_library(course Course.cpp Course.hpp)
+add_library(bst BinarySearchTree.cpp BinarySearchTree.hpp)
+add_library(ht HashTable.cpp HashTable.hpp)
+add_library(csv-parser CSVparser.cpp CSVparser.hpp)
+add_library(menu Menu.cpp Menu.hpp)
+add_library(utils Utils.cpp Utils.hpp)
+configure_file(courses.csv ${EXECUTABLE_OUTPUT_PATH} COPYONLY)
+
+add_executable(${PROJECT_NAME} main.cpp)
+link_directories(${CMAKE_SOURCE_DIR})
+target_link_libraries(${PROJECT_NAME} course bst ht csv-parser menu utils)
+
+set(CPACK_PROJECT_NAME ${PROJECT_NAME})
+set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
+include(CPack)
