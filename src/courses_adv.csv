@@ -1,0 +1,12 @@
+CS301,Top Notch Computer Science,CS250
+CS250,Introduction to Algorithms,CS200,CIS250,IT250
+CS200,Programming with Python,CS150
+CIS250,Operating Platforms,CS150,IT201
+IT250,Security and Performance,IT201
+IT201,Computer Hardware,CIS201,IT101
+CIS201,Principles of the World Wide Web,IT150
+CS150,Introduction to Scripting,CS101
+IT150,Excel Spreadsheets,CS101,IT101
+CS101,Scripting Languages,CS100
+IT101,Operating Systems,CS100
+CS100,Preparing for Computer Science

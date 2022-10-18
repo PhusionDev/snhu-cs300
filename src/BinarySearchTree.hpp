@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <unordered_map>
 #include "Course.hpp"
 
 struct TreeNode
@@ -41,7 +42,8 @@ class BinarySearchTree
 private:
     TreeNode *root;
     unsigned int _size;
-
+    std::unordered_map<std::string, int> prereqWeights; // map course number to prereq weight
+    
     void addNode(TreeNode *node, Course course);
     void removeNode(TreeNode *node);
     void deleteNode(TreeNode *node);

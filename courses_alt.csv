@@ -1,0 +1,13 @@
+CS400,Ultimate Computer Science,CS301
+CS301,Advanced Computer Processing,CS300,PHY150
+CS300,Getting Started with Algorithms,CS200
+CS200,Programming Languages,MAT201,CS150
+MAT201,The Most Discrete of Maths,MAT150
+MAT150,Calculus,MAT101
+MAT101,College Algebra
+CS150,Programming with Java,CS101
+CS101,Introduction to Scripting
+PHY150,Physics and Mechanics
+ENG101,English Literature
+ENG201,English Literature II,ENG101
+ECO201,Microeconomics

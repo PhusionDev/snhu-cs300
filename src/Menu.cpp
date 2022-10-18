@@ -74,10 +74,13 @@ namespace Menu
         /**
          * Prints the application's sub menu
          */
-        void SubMenu()
+        void SubMenu(bool extraCredit = false)
         {
+            std::string option2Append = extraCredit ? "[EXTRA CREDIT - In Requirement Order]" : "(sorted alphanumerically)";
+            std::string option2 = "2. Print Course List " + option2Append + "\n";
+            
             std::cout << "1. Load Data\n";
-            std::cout << "2. Print Course List (sorted)\n";
+            std::cout << option2;
             std::cout << "3. Print Course Info\n";
             std::cout << "9. Return to Main Menu\n";
             std::cout << "Enter choice: ";
@@ -86,7 +89,7 @@ namespace Menu
         /**
          * Prints the applications vector-related menu
          */
-        void VectorMenu()
+        void VectorMenu(std::string csvPath)
         {
             std::vector<Course> courses; // declare a vector of course objects
             std::clock_t ticks;          // declare an object to store time information
@@ -107,7 +110,7 @@ namespace Menu
                 {                                                        // load courses
                     Loading();                                           // print loading info
                     ticks = std::clock();                                // set stopwatch start time
-                    courses = utils::vector::LoadCourses("courses.csv"); // load courses from csv
+                    courses = utils::vector::LoadCourses(csvPath); // load courses from csv
                     ticks = std::clock() - ticks;                        // set stopwatch stop time
                     ClockMenu(ticks);                                    // print time analysis (loading from csv and appending to vector)
                     break;
@@ -179,7 +182,7 @@ namespace Menu
         /**
          * Prints the application's Hash Table menu
          */
-        void HashTableMenu()
+        void HashTableMenu(std::string csvPath)
         {
             HashTable *courses = nullptr; // declare courses hash table to null
             std::clock_t ticks;           // declare clock object
@@ -204,7 +207,7 @@ namespace Menu
                     }
                     Loading();
                     ticks = std::clock();                                   // start the stop watch
-                    courses = utils::hashTable::LoadCourses("courses.csv"); // load courses from csv
+                    courses = utils::hashTable::LoadCourses(csvPath); // load courses from csv
                     ticks = std::clock() - ticks;                           // stop the stopwatch
                     ClockMenu(ticks);                                       // print time analysis info (loading from csv and inserting into HT)
                     break;
@@ -272,7 +275,7 @@ namespace Menu
          * Prints the application's Menu for
          * Binary Search Tree functions.
          */
-        void BSTMenu()
+        void BSTMenu(std::string csvPath)
         {
             BinarySearchTree *courses = nullptr; // declare courses BST to null
             std::clock_t ticks;                  // declare clock object
@@ -285,7 +288,7 @@ namespace Menu
                 courseCount = courses != nullptr ? courses->Size() : 0;
                 dataLoaded = courseCount > 0 ? "Yes" : "No";
                 std::cout << "\nBinary Search Tree Data Structure Menu | Data Loaded: " << dataLoaded << " | Course Count: " << courseCount << std::endl;
-                SubMenu();          // print the sub menu options
+                SubMenu(true);          // print the sub menu options
                 std::cin >> choice; // get and store user input (choice)
                 switch (choice)
                 { // process user input
@@ -297,7 +300,7 @@ namespace Menu
                     }
                     Loading();                                                     // print message -- loading courses
                     ticks = std::clock();                                          // start stopwatch
-                    courses = utils::binarySearchTree::LoadCourses("courses.csv"); // load courses from csv
+                    courses = utils::binarySearchTree::LoadCourses(csvPath); // load courses from csv
                     ticks = std::clock() - ticks;                                  // stop stopwatch
                     ClockMenu(ticks);                                              // print time analysis (loading)
                     break;
@@ -306,7 +309,6 @@ namespace Menu
                 {
                     if (courses != nullptr)
                     {                                 // check if courses exist
-                        Sorting();                    // print message -- sorting courses
                         PrintAll();                   // print message -- printing all courses
                         ticks = std::clock();         // start stopwatch
                         courses->InOrder();           // print the BST in order
@@ -355,10 +357,28 @@ namespace Menu
      * Print's the applications main menu
      * and runs the application's main loop.
      */
-    void MainMenu()
+    void MainMenu(std::string csvPath)
     {
+        std::string initMessage = "\n* This application loads a list of courses from a csv file \
+(courses.csv if unspecified).\n\
+* It allows you to load courses into 3 different data structures for analysis:\n\
+* 1.) Vector\n\
+* 2.) Hash Table\n\
+* 3.) Binary Search Tree\n\
+\n\
+* 3 csv files are included:\n\
+* courses.csv - default courses from project files with 1 non-prerequisite course (no errors)\n\
+* courses_alt.csv - custom list that has 3 non-prerequisite courses (no errors)\n\
+* courses_bad.csv - custom list that has a course with an invalid prereq\n\
+\n\
+* For project requirements I have chosen the Binary Search Tree for a recommendation.\n\
+* And for extra credit, I have modified the functions for the Binary Search Tree analysis \
+to insert and print the schedule of courses in order of requirements opposed to alphanumerically.\n\n";
+        
+        std::cout << initMessage;
         int choice = 0;
         bool exit = false;
+        
         while (!exit)
         {
             std::cout << "Data Structure Analysis Main Menu -- jared.hodgkins@snhu.edu\n";
@@ -371,13 +391,13 @@ namespace Menu
             switch (choice)
             {
             case 1:
-                VectorMenu();
+                VectorMenu(csvPath);
                 break;
             case 2:
-                HashTableMenu();
+                HashTableMenu(csvPath);
                 break;
             case 3:
-                BSTMenu();
+                BSTMenu(csvPath);
                 break;
             case 9:
                 exit = true;

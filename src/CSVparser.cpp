@@ -11,6 +11,7 @@
 
 #include <fstream>
 #include <iomanip>
+#include <iostream>
 #include "CSVparser.hpp"
 
 namespace csv
@@ -25,6 +26,7 @@ namespace csv
     {
         std::string line;                   // value to hold current line in csv file
         _file = data;                       // alias to filename/filepath
+        std::cout << "Loading csv file: " << data << std::endl;
         std::ifstream ifile(_file.c_str()); // create input file stream and load csv file
         if (ifile.is_open())
         { // if file is open

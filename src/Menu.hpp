@@ -8,9 +8,11 @@
 #ifndef Menu_hpp
 #define Menu_hpp
 
+#include <string>
+
 namespace Menu
 {
-    void MainMenu();
+    void MainMenu(std::string csvPath);
 }
 
 #endif /* Menu_hpp */

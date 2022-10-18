@@ -45,11 +45,12 @@ BinarySearchTree::~BinarySearchTree()
 void BinarySearchTree::addNode(TreeNode *node, Course course)
 { // parent, node to insert
     // if node is larger then add to left
-    if (course.courseNumber < node->course.courseNumber)
+    if (course.extendedPrereqs.size() <= node->course.extendedPrereqs.size())
     {
         if (node->left == nullptr)
         {                                      // if no left node
             node->left = new TreeNode(course); // this node becomes left
+            prereqWeights[course.courseNumber] = course.extendedPrereqs.size();
         }
         else
         { // else recurse down the left node
@@ -61,6 +62,7 @@ void BinarySearchTree::addNode(TreeNode *node, Course course)
         if (node->right == nullptr)
         {                                       // if no right node
             node->right = new TreeNode(course); // this node becomes right
+            prereqWeights[course.courseNumber] = course.extendedPrereqs.size();
         }
         else
         { // else recurse down the left node
@@ -228,14 +230,14 @@ TreeNode *BinarySearchTree::searchNodeRecursive(TreeNode *node, std::string cour
         {
             return node; // current node is a match, return it
         }
-        else if (node->course.courseNumber > courseNumber)
+        else if (node->course.extendedPrereqs.size() >= prereqWeights[courseNumber])
         {
-            // current node's course number is larger, search left through tree
+            // current node's prerequisite weight is greater or equal, search left through tree
             return BinarySearchTree::searchNodeRecursive(node->left, courseNumber);
         }
         else
         {
-            // current node's course number is smaller, search right through tree
+            // current node's prerequisite weight is less, search right through tree
             return BinarySearchTree::searchNodeRecursive(node->right, courseNumber);
         }
     }
@@ -272,13 +274,18 @@ TreeNode *BinarySearchTree::getParentRecursive(TreeNode *subtreeRoot, std::strin
         return nullptr;
     }
 
-    if (subtreeRoot->left->course.courseNumber == courseNumber || subtreeRoot->right->course.courseNumber == courseNumber)
-    {
-        // the current node is the parent of the node with given course number
-        return subtreeRoot; // return current node
+    if (subtreeRoot->left != nullptr) {
+        if (subtreeRoot->left->course.courseNumber == courseNumber) {
+            return subtreeRoot;
+        }
+    }
+    if (subtreeRoot->right != nullptr) {
+        if (subtreeRoot->right->course.courseNumber == courseNumber) {
+            return subtreeRoot;
+        }
     }
 
-    if (courseNumber < subtreeRoot->course.courseNumber)
+    if (prereqWeights[courseNumber] <= subtreeRoot->course.extendedPrereqs.size())
     { // current node is greater than course number
         // search left in the tree
         return BinarySearchTree::getParentRecursive(subtreeRoot->left, courseNumber);
@@ -375,7 +382,7 @@ Course *BinarySearchTree::Search(std::string courseNumber)
             return &(current->course);
         }
         // if course is smaller than current node then traverse left
-        if (courseNumber < current->course.courseNumber)
+        if (prereqWeights[courseNumber] <= current->course.extendedPrereqs.size())
         {
             current = current->left;
         }

@@ -10,7 +10,17 @@
 
 int main(int argc, const char *argv[])
 {
-    Menu::MainMenu();
+    // process command line arguments
+    std::string csvPath;
+    switch (argc) {
+        case 2:
+            csvPath = argv[1];
+            break;
+        default:
+            csvPath = "courses.csv";
+    }
+
+    Menu::MainMenu(csvPath);
 
     return 0;
 }
